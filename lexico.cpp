@@ -25,7 +25,7 @@ bool get_data(){
 
 	int lin=1;
 	int col=1;
-	bool everything_is_ok = true;
+	bool ok = true;
 
 	while(glob::buffer = getc(glob::source_file)){
 		//ignore comments
@@ -54,24 +54,24 @@ bool get_data(){
 		//found unrecognized character so say it
 		else{
 			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col);
-			everything_is_ok = false;
+			ok = false;
 		}
 		col++;
 
 		//found end of file so we got everything
 		if(feof(glob::source_file)){
-			return everything_is_ok
+			return ok;
 		}
 	}
 
 	//this should NEVER HAPPEN!!!
 	printf("TEM ALGUMA COISA MUITO ERRADA!\n");
-	return everything_is_ok;
+	return ok;
 }
 
 //makes a token (unfinished?)
 bool make_token(string x){
-	x = convert_case(x);
+	x = convert_to_lowercase(x);
 	for(string a : glob::reserved_words){
 		if(x == a){
 			glob::symbol_table.push_back({x, x});
@@ -108,13 +108,14 @@ string nextword(int begin){
 }
 
 //generates all tokens
-void tokenize(){
+bool tokenize(){
 	bool got_token = false;
+	bool ok = true;
 	string up_until_now = "";
-	for(int i=0; i<glob::char_table.size(); i++){
+	for(int i=0; i<glob::char_table.size(); ){
 		up_until_now += nextword(i);
-		i += nextword(i).size()-1;		
-		up_until_now = convert_case(up_until_now);
+		i += nextword(i).size();		
+		up_until_now = convert_to_lowercase(up_until_now);
 		
 		if(
 			up_until_now == "vire" ||
@@ -123,69 +124,55 @@ void tokenize(){
 			up_until_now == "aguarde" ||
 			up_until_now == "robo"
 			){
-			up_until_now += nextword(i);
+			up_until_now += ' ' + nextword(i);
 			i += nextword(i).size();
-			glob::prints(up_until_now);
-			printf("\n");
 		}
 		else if(
 			up_until_now == "frente" ||
 			up_until_now == "direita" ||
 			up_until_now == "esquera"
 			){
-			if(convert_case(nextword(i)) == "robo"){
-				up_until_now += nextword(i);
+			if(convert_to_lowercase(nextword(i)) == "robo"){
+				up_until_now += ' ' + nextword(i);
 				i += nextword(i).size();
-				glob::prints(up_until_now);
-			printf("\n");
-				up_until_now += nextword(i);
+				up_until_now += ' ' + nextword(i);
 				i += nextword(i).size();
-				glob::prints(up_until_now);
-			printf("\n");
 			}
 		}
 		else if(up_until_now == "lampada"){
-			up_until_now += nextword(i);
+			up_until_now += ' ' + nextword(i);
 			i += nextword(i).size();
-			glob::prints(up_until_now);
-			printf("\n");
-			up_until_now += nextword(i);
+			up_until_now += ' ' + nextword(i);
 			i += nextword(i).size();
-			glob::prints(up_until_now);
-			printf("\n");
-			up_until_now += nextword(i);
+			up_until_now += ' ' + nextword(i);
 			i += nextword(i).size();
-			glob::prints(up_until_now);
-			printf("\n");
-			up_until_now += nextword(i);
+			up_until_now += ' ' + nextword(i);
 			i += nextword(i).size();
-			glob::prints(up_until_now);
-			printf("\n");
 		}
 		
 
 		got_token = make_token(up_until_now);
 		if(!got_token){
+			ok = false;
 			glob::char_pos x = glob::char_table[i];
 			printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
 		}
 
 		up_until_now = "";
 	}
+	return ok;
 }
 
 //main lexical analyzer
 void main_lex(){
 
-	glob::char_pos x = get_data();
-	
-	if(!glob::equal_char_pos(x, {-1, -1, -1})){
-		printf("erro: linha %d coluna %d: caractere nao reconhecido\n", x.line_number, x.column_number);
-	}
+	bool ok = true;
+
+	ok = get_data();
 
 	// print_char_table();
 
-	tokenize();
-
+	ok = tokenize();
+	
 	print_symbol_table();
 }

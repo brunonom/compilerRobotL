@@ -4,7 +4,7 @@ PROGRAMAINICIO
 		Mova 3 Passos
 		Aguarde Ate Robo Pronto
 		Vire Para ESQUERDA
-		Apagar Lampada
+		Apague Lampada
 		Vire Para DIREITA
 		Mova 1 Passo
 		Aguarde Ate Robo Pronto	
