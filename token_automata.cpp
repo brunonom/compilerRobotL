@@ -1,5 +1,6 @@
-//ideias ruins
+//bad ideas
 
+//its a letter
 bool autm_letra(char lexeme){
 	lexeme = lexeme | lexeme-32;
 	if('a'<=lexeme && lexeme<='z'){
@@ -8,6 +9,7 @@ bool autm_letra(char lexeme){
 	return false;
 }
 
+//its a digit
 bool autm_digito(char lexeme){
 	if('0'<=lexeme && lexeme<='9'){
 		return true;
@@ -15,6 +17,8 @@ bool autm_digito(char lexeme){
 	return false;
 }
 
+//convert a char into a position (for the automata)
+//a=0, b=1, ..., z=26
 int char_to_pos(char c){
 	if(autm_letra(c)){
 		return c-'a';
@@ -22,6 +26,8 @@ int char_to_pos(char c){
 	return -1;
 }
 
+//convert a digit into a position (for the automata)
+//0=0, 1=1, ..., 9=9
 int digit_to_pos(char c){
 	if(autm_digito(c)){
 		return c-'0';
@@ -29,6 +35,8 @@ int digit_to_pos(char c){
 	return -1;
 }
 
+//convert a char or a digit into a position (for the automata)
+//a=0, b=1, ..., z=26, 0=27, 1=28, ..., 9=36
 int any_to_pos(char c){
 	int pos = -1;
 	
@@ -45,7 +53,8 @@ int any_to_pos(char c){
 	return -1;
 }
 
-string convert_case(string x){
+//turns every letter in a string into a lowercase letter
+string convert_to_lowercase(string x){
 	for(int i=0; i<x.size(); i++){
 		if(autm_letra(x[i])){
 			x[i] = x[i] | x[i]-32;
@@ -53,11 +62,13 @@ string convert_case(string x){
 	}
 	return x;
 }
+
 //basicos acima
 //complexos abaixo
 
+//its a condition sentence
 bool autm_condicao(string lexeme){
-	lexeme = convert_case(lexeme);
+	lexeme = convert_to_lowercase(lexeme);
 	if(
 		lexeme == "robo pronto" ||
 		lexeme == "robo ocupado" ||
@@ -78,6 +89,7 @@ bool autm_condicao(string lexeme){
 	return false;
 }
 
+//its a number
 bool autm_numero(string lexeme){
 	vector< vector<int> > table;
 	table = {
@@ -102,7 +114,7 @@ bool autm_numero(string lexeme){
 	return false;
 }
 
-
+//its an identifier
 bool autm_identificador(string lexeme){
 
 	vector< vector<int> > table;
@@ -128,8 +140,9 @@ bool autm_identificador(string lexeme){
 	return false;
 }
 
+//its an instruction (unfinished)
 bool autm_instrucao(string lexeme){
-	lexeme = convert_case(lexeme);
+	lexeme = convert_to_lowercase(lexeme);
 	if(
 		lexeme == "pare" ||
 		lexeme == "finalize" ||

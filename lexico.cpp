@@ -1,3 +1,4 @@
+//autoexplanatory
 void print_char_table(){
 	// printf("%d linhas\n", char_table.size());
 	for(int i=0; i<glob::char_table.size(); i++){
@@ -9,25 +10,25 @@ void print_char_table(){
 	}
 }
 
+//autoexplanatory
 void print_symbol_table(){
 	for(glob::token t : glob::symbol_table){
 		string n = t.name;
 		string v = t.value;
 		
-		glob::prints(n);
-		printf("(");
-		glob::prints(v);
-		printf(")");
-		printf("\n");
+		cout << n << "(" << v << ")\n";
 	}
 }
 
-glob::char_pos get_data(){
+//get data from the source code
+bool get_data(){
 
 	int lin=1;
 	int col=1;
+	bool everything_is_ok = true;
 
 	while(glob::buffer = getc(glob::source_file)){
+		//ignore comments
 		if(glob::buffer == '#'){
 			while(glob::buffer != '\n'){
 				glob::buffer = getc(glob::source_file);
@@ -35,30 +36,40 @@ glob::char_pos get_data(){
 			col=0;
 			lin++;
 		}
+		//checks for invalid characters
 		else if(autm_letra(glob::buffer) || autm_digito(glob::buffer)){
 			glob::char_table.push_back({glob::buffer, lin, col});
 		}
+		//endline -> reset columns and goes to new line
 		else if(glob::buffer == '\n'){
 			col=0;
 			lin++;
 		}
+		//tab -> skip 4 columns
 		else if(glob::buffer == '\t'){
 			col+=3;
 		}
+		//ignore spaces and wierd characters 
 		else if(glob::buffer == 13 || glob::buffer == ' ' || glob::buffer == -1);
+		//found unrecognized character so say it
 		else{
-			return {glob::buffer, lin, col};
+			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col);
+			everything_is_ok = false;
 		}
 		col++;
 
+		//found end of file so we got everything
 		if(feof(glob::source_file)){
-			return {-1, -1, -1};
+			return everything_is_ok
 		}
 	}
 
-	return {-1, -1, -1};
+	//this should NEVER HAPPEN!!!
+	printf("TEM ALGUMA COISA MUITO ERRADA!\n");
+	return everything_is_ok;
 }
 
+//makes a token (unfinished?)
 bool make_token(string x){
 	x = convert_case(x);
 	for(string a : glob::reserved_words){
@@ -79,6 +90,7 @@ bool make_token(string x){
 	//falta oq msm?
 }
 
+//gets the next word (until a whitespace) from the source code
 string nextword(int begin){
 	int copy = begin;
 	int forward = begin +1;
@@ -95,6 +107,7 @@ string nextword(int begin){
 	return x;
 }
 
+//generates all tokens
 void tokenize(){
 	bool got_token = false;
 	string up_until_now = "";
@@ -161,6 +174,7 @@ void tokenize(){
 	}
 }
 
+//main lexical analyzer
 void main_lex(){
 
 	glob::char_pos x = get_data();

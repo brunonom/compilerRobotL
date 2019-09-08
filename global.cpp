@@ -1,5 +1,6 @@
 namespace glob{
 
+	//to know every char in the spurce code and its location
 	struct char_pos{
 		char character;
 		int line_number;
@@ -12,10 +13,15 @@ namespace glob{
 		}
 	};
 
+	//if two char_pos are equal -> return true; else return false;
 	bool equal_char_pos(char_pos a, char_pos b){
-		return a.character == b.character && a.line_number == b.line_number && a.column_number == b.column_number;
+		return 
+		a.character == b.character && 
+		a.line_number == b.line_number && 
+		a.column_number == b.column_number;
 	}
 
+	//tokens
 	struct token{
 		string name;
 		string value;
@@ -25,8 +31,16 @@ namespace glob{
 		}
 	};
 
+	//the source file
 	FILE * source_file;
+
+	//every char and its position in the source code
 	vector<char_pos> char_table;
+	
+	//symbol table
+	vector<token> symbol_table;
+
+	//idk lol
 	char buffer;
 
 	//q porra eh essa aqui mds to usando crack
@@ -45,6 +59,7 @@ namespace glob{
 	// token tk_digito = token("digito", "");
 	// token tk_sentido = token("sentido", "");
 
+	//reserved words
 	vector<string> reserved_words = {
 		"programainicio",
 		"execucaoinicio",
@@ -89,12 +104,4 @@ namespace glob{
 		"esquerda",
 		"direita"
 	};
-
-	vector<token> symbol_table;
-
-	void prints(string s){
-		for(char c : s){
-			printf("%c", c);
-		}
-	}
 }
