@@ -1,3 +1,5 @@
+
+#esse eh o input do programa exemplo (exemplo 1 - exemplo de programa usando a robot-l)
 PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
 	INICIO

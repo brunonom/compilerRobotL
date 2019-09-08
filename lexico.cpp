@@ -1,23 +1,45 @@
 //autoexplanatory
-void print_char_table(){
-	// printf("%d linhas\n", char_table.size());
+void print_char_table(bool line_and_col){
+	printf("tabela de caracteres\n");
+	printf("----------------------------------------\n");
+	int lin=glob::char_table[0].line_number;
+	int col=1;
+	printf("(linha %d)\t:", lin);
 	for(int i=0; i<glob::char_table.size(); i++){
 		// printf("%d colunas\n", char_table[i].size());
 		char c = glob::char_table[i].character;
 		int ln = glob::char_table[i].line_number;
 		int cn = glob::char_table[i].column_number;
-		printf("%c(%d)(%d)\n", c, ln, cn);
+		while(lin < ln){
+			printf("\n(linha %d)\t:", ln);
+			lin++;
+			col=1;
+		}
+		while(col < cn){
+			printf(" ");
+			col++;
+		}
+		if(line_and_col){
+			printf("%c(%d)(%d)", c, ln, cn);
+		}
+		else{
+			printf("%c", c);
+		}
+		col++;
 	}
+	printf("\n----------------------------------------\n");
 }
 
 //autoexplanatory
 void print_symbol_table(){
+	printf("tabela de tokens\n");
+	printf("----------------------------------------\n");
 	for(glob::token t : glob::symbol_table){
 		string n = t.name;
 		string v = t.value;
-		
 		cout << n << "(" << v << ")\n";
 	}
+	printf("----------------------------------------\n");
 }
 
 //get data from the source code
@@ -170,9 +192,11 @@ void main_lex(){
 
 	ok = get_data();
 
-	// print_char_table();
+	printf("\n");
+	print_char_table(false);
 
 	ok = tokenize();
 	
+	printf("\n");
 	print_symbol_table();
 }
