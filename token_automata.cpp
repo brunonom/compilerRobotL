@@ -1,20 +1,12 @@
-//bad ideas
-
 //its a letter
 bool autm_letra(char lexeme){
-	lexeme = lexeme | lexeme-32;
-	if('a'<=lexeme && lexeme<='z'){
-		return true;
-	}
-	return false;
+	lexeme = lexeme | 32; //maiusculo -> minusculo
+	return('a'<=lexeme && lexeme<='z');
 }
 
 //its a digit
 bool autm_digito(char lexeme){
-	if('0'<=lexeme && lexeme<='9'){
-		return true;
-	}
-	return false;
+	return('0'<=lexeme && lexeme<='9');
 }
 
 //convert a char into a position (for the automata)
@@ -57,14 +49,23 @@ int any_to_pos(char c){
 string convert_to_lowercase(string x){
 	for(int i=0; i<x.size(); i++){
 		if(autm_letra(x[i])){
-			x[i] = x[i] | x[i]-32;
+			x[i] = x[i] | 32;
 		}
 	}
 	return x;
 }
 
-//basicos acima
-//complexos abaixo
+//its a direction
+bool autm_sentido(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	if(
+		lexeme == "esquerda" ||
+		lexeme == "direita"
+		){
+		return true;
+	}
+	return false;
+}
 
 //its a condition sentence
 bool autm_condicao(string lexeme){
@@ -116,7 +117,6 @@ bool autm_numero(string lexeme){
 
 //its an identifier
 bool autm_identificador(string lexeme){
-
 	vector< vector<int> > table;
 	table = {
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -144,19 +144,80 @@ bool autm_identificador(string lexeme){
 bool autm_instrucao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
+		lexeme == "mova" ||
+		lexeme == "passos" ||
+		lexeme == "vire para" ||
 		lexeme == "pare" ||
 		lexeme == "finalize" ||
 		lexeme == "apague lampada" ||
-		lexeme == "acenda lampada"
+		lexeme == "acenda lampada" ||
+		lexeme == "aguarde ate"
 		){
 		return true;
 	}
-	else{
-		//nossa eu nao tenho a menor ideia do q to faznedo
-		//nem do que eh pra fazer
-	}
+	return false;
 }
 
+//its a condition
+bool autm_condicional(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	if(
+		lexeme == "se" ||
+		lexeme == "entao" ||
+		lexeme == "fimse" ||
+		lexeme == "senao" ||
+		lexeme == "fimsenao"
+		){
+		return true;
+	}
+	return false;
+}
 
+//issa loop
+bool autm_laco(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	return(
+		lexeme == "enquanto" ||
+		lexeme == "faca" ||
+		lexeme == "fimpara"
+		);
+}
 
-//acho q peguei o jeito da coisa so agr (palavras reservadas)
+//issan iteration
+bool autm_iteracao(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	return(
+		lexeme == "repita" ||
+		lexeme == "vezes" ||
+		lexeme == "fimrepita"
+		);
+}
+
+//issa blocc
+bool autm_bloco(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	return(
+		lexeme == "inicio" ||
+		lexeme == "fim"
+		);
+}
+
+//issa declaration
+bool autm_declaracao(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	return(
+		lexeme == "definainstrucao" ||
+		lexeme == "como"
+		);
+}
+
+//issa program
+bool autm_programa(string lexeme){
+	lexeme = convert_to_lowercase(lexeme);
+	return(
+		lexeme == "programainicio" ||
+		lexeme == "execucaoinicio" ||
+		lexeme == "fimexecucao" ||
+		lexeme == "fimprograma"
+		);
+}
