@@ -1,2 +1,5 @@
+*.exe
+
 input2.txt
 err.txt
+todo.txt
