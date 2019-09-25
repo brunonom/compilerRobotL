@@ -1,12 +1,12 @@
 //autoexplanatory
-void print_char_table(bool line_and_col){
+void print_input_as_string(bool line_and_col){
 	printf("tabela de caracteres\n");
 	printf("----------------------------------------\n");
 
-	for(int i=0; i<glob::char_table.size(); i++){
-		char c = glob::char_table[i].character;
-		int ln = glob::char_table[i].line_number;
-		int cn = glob::char_table[i].column_number;
+	for(int i=0; i<glob::input_as_string.size(); i++){
+		char c = glob::input_as_string[i].character;
+		int ln = glob::input_as_string[i].line_number;
+		int cn = glob::input_as_string[i].column_number;
 		if(line_and_col){
 			printf("%c(%d)(%d)\n", c, ln, cn);
 		}
@@ -15,14 +15,14 @@ void print_char_table(bool line_and_col){
 		}
 	}
 
-	// int lin=glob::char_table[0].line_number;
+	// int lin=glob::input_as_string[0].line_number;
 	// int col=1;
 	// printf("(linha %d)\t:", lin);
-	// for(int i=0; i<glob::char_table.size(); i++){
-	// 	// printf("%d colunas\n", char_table[i].size());
-	// 	char c = glob::char_table[i].character;
-	// 	int ln = glob::char_table[i].line_number;
-	// 	int cn = glob::char_table[i].column_number;
+	// for(int i=0; i<glob::input_as_string.size(); i++){
+	// 	// printf("%d colunas\n", input_as_string[i].size());
+	// 	char c = glob::input_as_string[i].character;
+	// 	int ln = glob::input_as_string[i].line_number;
+	// 	int cn = glob::input_as_string[i].column_number;
 	// 	while(lin < ln){
 	// 		printf("\n(linha %d)\t:", ln);
 	// 		lin++;
@@ -79,21 +79,11 @@ bool get_data(){
 		//normal characters only
 		else if(autm_letra(buffer) || autm_digito(buffer)){
 			col++;
-			glob::char_table.push_back({buffer, lin, col});
+			glob::input_as_string.push_back({buffer, lin, col});
 		}
 		
-		//conglomera whitespace consecutivo em um ' '
+		//erase whitespace
 		else if(buffer == ' ' || buffer == '\t' || buffer == '\n'){
-			
-			if(buffer == ' '){
-				glob::char_table.push_back({' ', lin, col+1});
-			}
-			else if(buffer == '\t'){
-				glob::char_table.push_back({' ', lin, col+4});
-			}
-			else if(buffer == '\n'){
-				glob::char_table.push_back({' ', lin, col+1});
-			}
 
 			ungetc(buffer, glob::source_file);
 			
@@ -148,13 +138,6 @@ bool is_a_reserved_word(string x){
 //makes a token (unfinished?)
 bool make_token(string x){
 	x = convert_to_lowercase(x);
-	// for(string a : glob::reserved_words){
-	// 	if(x == a){
-	// 		glob::symbol_table.push_back({x, x});
-	// 		return true;
-	// 	}
-	// }
-
 
 	if(autm_numero(x)){
 		glob::symbol_table.push_back({"numero", x});
@@ -203,69 +186,40 @@ bool make_token(string x){
 	return false;
 }
 
-//gets the next word (until a whitespace) from the source code
-string nextword(int i){
-	string x;
-	if(glob::char_table[i].character == ' '){
-		while(!autm_letra(glob::char_table[i].character) && !autm_digito(glob::char_table[i].character)){
-			i++;
-		}
-	}
-	while(glob::char_table[i].character != ' ' && i<glob::char_table.size()){
-		x += glob::char_table[i].character;
-		i++;
-	}
-	return x;
-}
-
 //generates all tokens
 bool tokenize(){
 	bool got_token = false;
-	bool ok = true;
+	bool ok = false;
 	string up_until_now = "";
-	for(int i=0; i<glob::char_table.size(); ){
-		up_until_now += nextword(i);
-		i += nextword(i).size()+1;		
-		up_until_now = convert_to_lowercase(up_until_now);
-		
-		if(
-			up_until_now == "vire" ||
-			up_until_now == "apague" ||
-			up_until_now == "acenda" ||
-			up_until_now == "aguarde" ||
-			up_until_now == "robo"
-			){
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
+	vector<bool> autm_final_states(11, false);
+
+	up_until_now += glob::input_as_string[0].character;
+	for(int i=0; i<glob::input_as_string.size(); ){
+		int start = i;
+
+		while(i - start + 1 <= 23 && !ok){
+			ok = autm_sentido(up_until_now);
+			ok = autm_numero(up_until_now);
+			ok = autm_condicao(up_until_now);
+			ok = autm_instrucao(up_until_now);
+			ok = autm_condicional(up_until_now);
+			ok = autm_laco(up_until_now);
+			ok = autm_iteracao(up_until_now);
+			ok = autm_bloco(up_until_now);
+			ok = autm_declaracao(up_until_now);
+			ok = autm_programa(up_until_now);
+			i++;
+			up_until_now += glob::input_as_string[i].character;
+			up_until_now = convert_to_lowercase(up_until_now);	
+			cout << up_until_now << "\n";
 		}
-		else if(
-			up_until_now == "frente" ||
-			up_until_now == "direita" ||
-			up_until_now == "esquera"
-			){
-			if(convert_to_lowercase(nextword(i)) == "robo"){
-				up_until_now += ' ' + nextword(i);
-				i += nextword(i).size()+1;
-				up_until_now += ' ' + nextword(i);
-				i += nextword(i).size()+1;
-			}
-		}
-		else if(up_until_now == "lampada"){
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-		}		
 
 		got_token = make_token(up_until_now);
 		if(!got_token){
 			ok = false;
-			glob::char_pos x = glob::char_table[i];
-			printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
+			glob::char_pos x = glob::input_as_string[i];
+			// printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
+			i = start;
 		}
 
 		up_until_now = "";
@@ -281,7 +235,7 @@ void main_lex(){
 	ok = get_data();
 
 	printf("\n");
-	print_char_table(true);
+	print_input_as_string(true);
 
 	ok = tokenize();
 	
