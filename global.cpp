@@ -34,8 +34,7 @@ namespace glob{
 	FILE * source_file;
 
 	//every char and its position in the source code
-	vector<char_pos> input_as_string;
-	vector< vector<char_pos> > char_table;
+	vector<char_pos> char_table;
 	
 	//symbol table
 	vector<token> symbol_table;
@@ -63,26 +62,26 @@ namespace glob{
 		"fimsenao",
 		"mova",
 		"passos",
-		"vire para",
+		"vire",
+		"para",
 		"pare",
 		"finalize",
-		"apaguelampada",
-		"acendalampada",
-		"aguardeate",
-		"robopronto",
-		"roboocupado",
-		"roboparado",
-		"robomovimentando",
-		"frenterobobloqueada",
-		"direitarobobloqueada",
-		"esquerdarobobloqueada",
-		"lampadaacesaafrente",
-		"lampadaapagadaafrente",
-		"lampadaacesaaesquerda",
-		"lampadaapagadaaesquerda",
-		"lampadaacesaadireita",
-		"lampadaapagadaadireita",
+		"apague",
+		"acenda",
+		"aguarde",
+		"ate",
+		"robo",
+		"pronto",
+		"ocupado",
+		"parado",
+		"movimentando",
+		"frente",
+		"direita",
 		"esquerda",
-		"direita"
+		"bloqueada",
+		"lampada"
+		"acesa",
+		"apagada",
+		"a"
 	};
 }

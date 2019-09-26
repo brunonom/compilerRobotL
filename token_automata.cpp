@@ -71,19 +71,19 @@ bool autm_sentido(string lexeme){
 bool autm_condicao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
-		lexeme == "robopronto" ||
-		lexeme == "roboocupado" ||
-		lexeme == "roboparado" ||
-		lexeme == "robomovimentando" ||
-		lexeme == "frenterobobloqueada" ||
-		lexeme == "direitarobobloqueada" ||
-		lexeme == "esquerdarobobloqueada" ||
-		lexeme == "lampadaacesaafrente" ||
-		lexeme == "lampadaapagadaafrente" ||
-		lexeme == "lampadaacesaaesquerda" ||
-		lexeme == "lampadaapagadaaesquerda" ||
-		lexeme == "lampadaacesaadireita" ||
-		lexeme == "lampadaapagadaadireita" 
+		lexeme == "robo pronto" ||
+		lexeme == "robo ocupado" ||
+		lexeme == "robo parado" ||
+		lexeme == "robo movimentando" ||
+		lexeme == "frente robo bloqueada" ||
+		lexeme == "direita robo bloqueada" ||
+		lexeme == "esquerda robo bloqueada" ||
+		lexeme == "lampada acesa a frente" ||
+		lexeme == "lampada apagada a frente" ||
+		lexeme == "lampada acesa a esquerda" ||
+		lexeme == "lampada apagada a esquerda" ||
+		lexeme == "lampada acesa a direita" ||
+		lexeme == "lampada apagada a direita" 
 		){
 		return true;
 	}
@@ -92,7 +92,8 @@ bool autm_condicao(string lexeme){
 
 //its a number
 bool autm_numero(string lexeme){
-	vector< vector<int> > table = {
+	vector< vector<int> > table;
+	table = {
 		{1,1,1,1,1,1,1,1,1,1},
 		{1,1,1,1,1,1,1,1,1,1}
 	};
@@ -116,7 +117,8 @@ bool autm_numero(string lexeme){
 
 //its an identifier
 bool autm_identificador(string lexeme){
-	vector< vector<int> > table = {
+	vector< vector<int> > table;
+	table = {
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
@@ -144,12 +146,12 @@ bool autm_instrucao(string lexeme){
 	if(
 		lexeme == "mova" ||
 		lexeme == "passos" ||
-		lexeme == "virepara" ||
+		lexeme == "vire para" ||
 		lexeme == "pare" ||
 		lexeme == "finalize" ||
-		lexeme == "apaguelampada" ||
-		lexeme == "acendalampada" ||
-		lexeme == "aguardeate"
+		lexeme == "apague lampada" ||
+		lexeme == "acenda lampada" ||
+		lexeme == "aguarde ate"
 		){
 		return true;
 	}
