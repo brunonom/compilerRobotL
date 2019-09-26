@@ -66,22 +66,19 @@ bool get_data(){
 	char buffer;
 
 	while(buffer = getc(glob::source_file)){
-		
 		//ignore comments
 		if(buffer == '#'){
 			col=0;
 			lin++;
-			while(buffer != '\n'){
+			while(buffer != '\n' && !feof(glob::source_file)){
 				buffer = getc(glob::source_file);
 			}
 		}
-		
 		//normal characters only
 		else if(autm_letra(buffer) || autm_digito(buffer)){
 			col++;
 			glob::char_table.push_back({buffer, lin, col});
 		}
-		
 		//conglomera whitespace consecutivo em um ' '
 		else if(buffer == ' ' || buffer == '\t' || buffer == '\n'){
 			
@@ -115,10 +112,8 @@ bool get_data(){
 				}
 			}
 		}
-		
 		//ignore wierd characters 
 		else if(buffer == 13 || buffer == -1);
-		
 		//found unrecognized character so say it
 		else{
 			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col);
@@ -147,15 +142,12 @@ bool is_a_reserved_word(string x){
 
 //makes a token (unfinished?)
 bool make_token(string x){
-	x = convert_to_lowercase(x);
 	// for(string a : glob::reserved_words){
 	// 	if(x == a){
 	// 		glob::symbol_table.push_back({x, x});
 	// 		return true;
 	// 	}
 	// }
-
-
 	if(autm_numero(x)){
 		glob::symbol_table.push_back({"numero", x});
 		return true;
@@ -215,60 +207,77 @@ string nextword(int i){
 		x += glob::char_table[i].character;
 		i++;
 	}
-	return x;
+	if(x.size()==0){
+		x+="$";
+	}
+	return convert_to_lowercase(x);
 }
-
+glob::char_pos get_char_table_pos(int i){
+	if(glob::char_table[i].character == ' '){
+		while(!autm_letra(glob::char_table[i].character) && !autm_digito(glob::char_table[i].character)){
+			i++;
+		}
+	}
+	return (i<glob::char_table.size() ? glob::char_table[i] : glob::char_pos('x',-1,-1));
+}
 //generates all tokens
 bool tokenize(){
 	bool got_token = false;
 	bool ok = true;
-	string up_until_now = "";
 	for(int i=0; i<glob::char_table.size(); ){
-		up_until_now += nextword(i);
-		i += nextword(i).size()+1;		
-		up_until_now = convert_to_lowercase(up_until_now);
-		
+		string novo_token = nextword(i);
+		glob::char_pos ini = get_char_table_pos(i);
+		i += 1 + novo_token.size();		
+		string k;
 		if(
-			up_until_now == "vire" ||
-			up_until_now == "apague" ||
-			up_until_now == "acenda" ||
-			up_until_now == "aguarde" ||
-			up_until_now == "robo"
-			){
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
+			novo_token == "vire" ||
+			novo_token == "apague" ||
+			novo_token == "acenda" ||
+			novo_token == "aguarde" ||
+			novo_token == "robo"
+		  ){
+		  	k = nextword(i);
+			novo_token += ' ' + k;
+			i += 1 + k.size();
 		}
 		else if(
-			up_until_now == "frente" ||
-			up_until_now == "direita" ||
-			up_until_now == "esquera"
+			novo_token == "frente" ||
+			novo_token == "direita" ||
+			novo_token == "esquerda"
 			){
 			if(convert_to_lowercase(nextword(i)) == "robo"){
-				up_until_now += ' ' + nextword(i);
-				i += nextword(i).size()+1;
-				up_until_now += ' ' + nextword(i);
-				i += nextword(i).size()+1;
+				k = nextword(i);
+				novo_token += ' ' + k;
+				i += 1 + k.size();
+				k = nextword(i);
+				novo_token += ' ' + k;
+				i += 1 + k.size();
 			}
 		}
-		else if(up_until_now == "lampada"){
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-			up_until_now += ' ' + nextword(i);
-			i += nextword(i).size()+1;
-		}		
+		else if(novo_token == "lampada"){
+			k = nextword(i);
+			novo_token += ' ' + k;
+			i += 1 + k.size();
 
-		got_token = make_token(up_until_now);
+			k = nextword(i);
+			novo_token += ' ' + k;
+			i += 1 + k.size();
+			
+			k = nextword(i);
+			novo_token += ' ' + k;
+			i += 1 + k.size();
+		}		
+		if(novo_token.back() == '$'){
+			cout << "ERRO, linha: " << ini.line_number << " coluna: " << ini.column_number << endl;
+			return false;
+		}
+		cout << novo_token << endl;
+		got_token = make_token(novo_token);
 		if(!got_token){
 			ok = false;
 			glob::char_pos x = glob::char_table[i];
 			printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
 		}
-
-		up_until_now = "";
 	}
 	return ok;
 }

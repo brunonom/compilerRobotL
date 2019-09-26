@@ -1,6 +1,6 @@
 namespace glob{
 
-	//to know every char in the spurce code and its location
+	//to know every char in the source code and its location
 	struct char_pos{
 		char character;
 		int line_number;
@@ -24,7 +24,9 @@ namespace glob{
 	struct token{
 		string name;
 		string value;
-		
+		int line_number;
+		int column_number;
+
 		token(string n, string v){
 			name = n; value = v;
 		}
@@ -83,5 +85,6 @@ namespace glob{
 		"acesa",
 		"apagada",
 		"a"
+		"$"
 	};
 }

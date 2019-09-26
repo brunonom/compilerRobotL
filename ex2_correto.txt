@@ -1,0 +1,9 @@
+PROGRAMAINICIO
+	DEFINAINSTRUCAO Anda COMO
+	INICIO
+		Enquanto Lampada Acesa a Frente faca mova 32 passos fimpara
+	FIM
+	EXECUCAOINICIO
+		Enquanto Robo Pronto faca Anda fimpara
+	FIMEXECUCAO
+FIMPROGRAMA
