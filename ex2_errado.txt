@@ -1,0 +1,9 @@
+#exemplo lexicamente errado 1
+
+PROGRAMAINICIO
+	EXECUCAOINICIO
+		enquanto Robo Pronto faca
+			mova Robo #erro = palavra reservada
+		fimpara
+	FIMEXECUCAO
+FIMPROGRAMA

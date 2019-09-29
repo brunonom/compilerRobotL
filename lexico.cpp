@@ -1,6 +1,6 @@
 //autoexplanatory
 void print_char_table(bool line_and_col){
-	printf("tabela de caracteres\n");
+	printf("\ntabela de caracteres\n");
 	printf("----------------------------------------\n");
 
 	for(int i=0; i<glob::char_table.size(); i++){
@@ -46,7 +46,7 @@ void print_char_table(bool line_and_col){
 
 //autoexplanatory
 void print_symbol_table(){
-	printf("tabela de tokens\n");
+	printf("\ntabela de tokens\n");
 	printf("----------------------------------------\n");
 	cout << "[token] : [valor]\n";
 	for(glob::token t : glob::symbol_table){
@@ -67,6 +67,7 @@ bool get_data(){
 
 	while(buffer = getc(glob::source_file)){
 		//ignore comments
+		//cout << buffer << endl;
 		if(buffer == '#'){
 			col=0;
 			lin++;
@@ -74,6 +75,7 @@ bool get_data(){
 				buffer = getc(glob::source_file);
 			}
 		}
+
 		//normal characters only
 		else if(autm_letra(buffer) || autm_digito(buffer)){
 			col++;
@@ -118,6 +120,7 @@ bool get_data(){
 		else{
 			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col);
 			ok = false;
+			return ok;
 		}
 		
 		//found end of file so we got everything
@@ -268,14 +271,16 @@ bool tokenize(){
 			i += 1 + k.size();
 		}		
 		if(novo_token.back() == '$'){
+			ok = false;
 			cout << "ERRO, linha: " << ini.line_number << " coluna: " << ini.column_number << endl;
-			return false;
+			continue;
 		}
-		cout << novo_token << endl;
+		//cout << novo_token << endl;
 		got_token = make_token(novo_token);
+		// cout << novo_token << endl;
 		if(!got_token){
 			ok = false;
-			glob::char_pos x = glob::char_table[i];
+			glob::char_pos x = ini;
 			printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
 		}
 	}
@@ -283,17 +288,16 @@ bool tokenize(){
 }
 
 //main lexical analyzer
-void main_lex(){
+bool main_lex(bool debug_mode){
 
 	bool ok = true;
 
 	ok = get_data();
 
-	printf("\n");
-	print_char_table(true);
-
+	if(debug_mode) print_char_table(true);
+	if(!ok) return false;
 	ok = tokenize();
 	
-	printf("\n");
-	print_symbol_table();
+	if(debug_mode) print_symbol_table();
+	return ok;
 }

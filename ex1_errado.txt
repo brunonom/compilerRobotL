@@ -1,0 +1,19 @@
+#exemplo lexicamente errado 1
+
+PROGRAMAINICIO
+	DEFINAINSTRUCAO 4movimentos COMO  #erro = identificador começando com numero
+	INICIO
+		Mova 1
+		Vire Para esquerda
+		Mova 1
+		Vire Para esquerda
+		Mova 1
+		Vire Para esquerda
+		Mova 1
+		Vire Para esquerda
+	FIM
+	EXECUCAOINICIO
+		Repita 4 VEZES 4movimentos #erro = identificador começando com numero
+		Vire Para direita
+	FIMEXECUCAO
+FIMPROGRAMA
