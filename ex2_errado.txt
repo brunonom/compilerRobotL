@@ -1,4 +1,4 @@
-#exemplo lexicamente errado 1
+#exemplo lexicamente errado 2
 
 PROGRAMAINICIO
 	EXECUCAOINICIO

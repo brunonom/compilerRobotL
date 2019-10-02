@@ -1,5 +1,8 @@
+#exemplo lexicamente errado 3
+
 PROGRAMAINICIO
 	EXECUCAOINICIO
-		Enquanto Robo Pronto faca ゲイの権利 # erro caracteres nao identificados
+		Repita 14a9 VEZES funcao #erro = numero mal formado
+		Vire Para direita
 	FIMEXECUCAO
 FIMPROGRAMA
