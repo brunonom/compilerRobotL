@@ -62,10 +62,10 @@ bool get_data(){
 
 	int lin=1;
 	int col=1;
-	bool ok = true;
 	char buffer;
 
 	while(buffer = getc(glob::source_file)){
+		
 		//ignore comments
 		//cout << buffer << endl;
 		if(buffer == '#'){
@@ -81,6 +81,7 @@ bool get_data(){
 			col++;
 			glob::char_table.push_back({buffer, lin, col});
 		}
+
 		//conglomera whitespace consecutivo em um ' '
 		else if(buffer == ' ' || buffer == '\t' || buffer == '\n'){
 			
@@ -114,26 +115,28 @@ bool get_data(){
 				}
 			}
 		}
-		//ignore wierd characters 
+
+		//ignore very specfic wierd characters that may appear in normal code
 		else if(buffer == 13 || buffer == -1);
-		//found unrecognized character so say it
+		
+		//it was none of the above so it is an unrecognized character
 		else{
-			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col);
-			ok = false;
-			return ok;
+			printf("erro: linha %d coluna %d: caractere nao reconhecido\n", lin, col+1);
+			return false;
 		}
 		
 		//found end of file so we got everything
 		if(feof(glob::source_file)){
-			return ok;
+			return true;
 		}
 	}
 
 	//this should NEVER HAPPEN!!!
-	printf("TEM ALGUMA COISA MUITO ERRADA!\n");
-	return ok;
+	printf("TEM ALGUMA COISA MUITO ERRADA COM SEU ARQUIVO DE ENTRADA!\n");
+	return false;
 }
 
+//checks if x is a reserved word
 bool is_a_reserved_word(string x){
 	for(string s : glob::reserved_words){
 		if(x == s){
@@ -143,7 +146,7 @@ bool is_a_reserved_word(string x){
 	return false;
 }
 
-//makes a token (unfinished?)
+//makes a token
 bool make_token(string x){
 	// for(string a : glob::reserved_words){
 	// 	if(x == a){
@@ -215,6 +218,8 @@ string nextword(int i){
 	}
 	return convert_to_lowercase(x);
 }
+
+//gets information of index i from char_table_pos
 glob::char_pos get_char_table_pos(int i){
 	if(glob::char_table[i].character == ' '){
 		while(!autm_letra(glob::char_table[i].character) && !autm_digito(glob::char_table[i].character)){
@@ -223,6 +228,7 @@ glob::char_pos get_char_table_pos(int i){
 	}
 	return (i<glob::char_table.size() ? glob::char_table[i] : glob::char_pos('x',-1,-1));
 }
+
 //generates all tokens
 bool tokenize(){
 	bool got_token = false;
@@ -281,23 +287,24 @@ bool tokenize(){
 		if(!got_token){
 			ok = false;
 			glob::char_pos x = ini;
-			printf("erro: linha %d coluna %d: palavra nao reconhecida\n", x.line_number, x.column_number);
+			printf("erro: linha %d coluna %d: nao foi possivel formar um token\n", x.line_number, x.column_number);
 		}
 	}
 	return ok;
 }
 
 //main lexical analyzer
-bool main_lex(bool debug_mode){
+bool main_lex(bool verbose){
 
 	bool ok = true;
 
 	ok = get_data();
-
-	if(debug_mode) print_char_table(true);
-	if(!ok) return false;
-	ok = tokenize();
+	if(verbose) print_char_table(true);
 	
-	if(debug_mode) print_symbol_table();
+	if(!ok) return false;
+	
+	ok = tokenize();
+	if(verbose) print_symbol_table();
+	
 	return ok;
 }

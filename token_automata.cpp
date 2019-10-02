@@ -1,10 +1,10 @@
-//its a letter
+//checks if lexeme fits the pattern of "letter"
 bool autm_letra(char lexeme){
-	lexeme = lexeme | 32; //maiusculo -> minusculo
+	lexeme = lexeme | 32; //uppercase -> lowercase
 	return('a'<=lexeme && lexeme<='z');
 }
 
-//its a digit
+//checks if lexeme fits the pattern of "digit"
 bool autm_digito(char lexeme){
 	return('0'<=lexeme && lexeme<='9');
 }
@@ -55,7 +55,7 @@ string convert_to_lowercase(string x){
 	return x;
 }
 
-//its a direction
+//checks if lexeme fits the pattern of "direction"
 bool autm_sentido(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
@@ -67,7 +67,7 @@ bool autm_sentido(string lexeme){
 	return false;
 }
 
-//its a condition sentence
+//checks if lexeme fits the pattern of "condition" sentence
 bool autm_condicao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
@@ -90,7 +90,7 @@ bool autm_condicao(string lexeme){
 	return false;
 }
 
-//its a number
+//checks if lexeme fits the pattern of "number"
 bool autm_numero(string lexeme){
 	vector< vector<int> > table;
 	table = {
@@ -115,7 +115,7 @@ bool autm_numero(string lexeme){
 	return false;
 }
 
-//its an identifier
+//checks if lexeme fits the pattern of "identifier"
 bool autm_identificador(string lexeme){
 	vector< vector<int> > table;
 	table = {
@@ -140,7 +140,7 @@ bool autm_identificador(string lexeme){
 	return false;
 }
 
-//its an instruction (unfinished)
+//checks if lexeme fits the pattern of "instruction"
 bool autm_instrucao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
@@ -158,7 +158,7 @@ bool autm_instrucao(string lexeme){
 	return false;
 }
 
-//its a condition
+//checks if lexeme fits the pattern of "condition"
 bool autm_condicional(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	if(
@@ -173,7 +173,7 @@ bool autm_condicional(string lexeme){
 	return false;
 }
 
-//issa loop
+//checks if lexeme fits the pattern of "loop"
 bool autm_laco(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	return(
@@ -183,7 +183,7 @@ bool autm_laco(string lexeme){
 		);
 }
 
-//issan iteration
+//checks if lexeme fits the pattern of "iteration"
 bool autm_iteracao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	return(
@@ -193,7 +193,7 @@ bool autm_iteracao(string lexeme){
 		);
 }
 
-//issa blocc
+//checks if lexeme fits the pattern of "block"
 bool autm_bloco(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	return(
@@ -202,7 +202,7 @@ bool autm_bloco(string lexeme){
 		);
 }
 
-//issa declaration
+//checks if lexeme fits the pattern of "declaration"
 bool autm_declaracao(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	return(
@@ -211,7 +211,7 @@ bool autm_declaracao(string lexeme){
 		);
 }
 
-//issa program
+//checks if lexeme fits the pattern of "program"
 bool autm_programa(string lexeme){
 	lexeme = convert_to_lowercase(lexeme);
 	return(

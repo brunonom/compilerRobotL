@@ -1,7 +1,7 @@
 #exemplo lexicamente errado 1
 
 PROGRAMAINICIO
-	DEFINAINSTRUCAO 4movimentos COMO  #erro = identificador começando com numero
+	DEFINAINSTRUCAO 4movimentos COMO  #erro = identificador mal formado
 	INICIO
 		Mova 1
 		Vire Para esquerda
@@ -13,7 +13,7 @@ PROGRAMAINICIO
 		Vire Para esquerda
 	FIM
 	EXECUCAOINICIO
-		Repita 4 VEZES 4movimentos #erro = identificador começando com numero
+		Repita 4 VEZES 4movimentos #erro = identificador mal formado
 		Vire Para direita
 	FIMEXECUCAO
 FIMPROGRAMA

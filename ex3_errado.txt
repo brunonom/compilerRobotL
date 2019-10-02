@@ -1,8 +1,8 @@
 #exemplo lexicamente errado 3
 
 PROGRAMAINICIO
-	EXECUCAOINICIO
-		Repita 14a9 VEZES funcao #erro = numero mal formado
+	EXECUÇAOINICIO #erro = caractere desconhecido (Ç)
+		Repita 14 VEZES funcao
 		Vire Para direita
 	FIMEXECUCAO
 FIMPROGRAMA

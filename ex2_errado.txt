@@ -3,7 +3,7 @@
 PROGRAMAINICIO
 	EXECUCAOINICIO
 		enquanto Robo Pronto faca
-			mova Robo #erro = palavra reservada
+			mova Robo #erro = palavra reservada nao pode ser reconhecida como identificador
 		fimpara
 	FIMEXECUCAO
 FIMPROGRAMA
