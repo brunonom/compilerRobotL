@@ -163,39 +163,39 @@ bool make_token(string x){
 		return true;
 	}
 	else if(autm_condicao(x)){
-		glob::symbol_table.push_back({"condicao", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_instrucao(x)){
-		glob::symbol_table.push_back({"instrucao", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_condicional(x)){
-		glob::symbol_table.push_back({"condicional", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_laco(x)){
-		glob::symbol_table.push_back({"laco", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_iteracao(x)){
-		glob::symbol_table.push_back({"iteracao", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_bloco(x)){
-		glob::symbol_table.push_back({"bloco", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_declaracao(x)){
-		glob::symbol_table.push_back({"declaracao", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_programa(x)){
-		glob::symbol_table.push_back({"programa", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	else if(autm_sentido(x)){
-		glob::symbol_table.push_back({"sentido", x});
+		glob::symbol_table.push_back({x, x});
 		return true;
 	}
 	return false;
