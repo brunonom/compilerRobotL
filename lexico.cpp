@@ -127,6 +127,7 @@ bool get_data(){
 		
 		//found end of file so we got everything
 		if(feof(glob::source_file)){
+			fclose(glob::source_file);
 			return true;
 		}
 	}

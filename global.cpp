@@ -32,6 +32,25 @@ namespace glob{
 		}
 	};
 
+	struct grammar{
+		struct production{
+			string nonterminal;
+			vector<string> body;
+			production(string nonterminal, vector<string> &body) : nonterminal(nonterminal), body(body) {}
+		};
+		vector<production> productions;
+		void insert_Production(string nonterminal, vector<string> &body){
+			productions.push_back(production(nonterminal,body));
+		}
+	};
+	// grammar to be built in syntactic analysis.
+	grammar G;
+	// map used for table transitions in syntactic analysis.
+	#define pss pair<string,string>
+	map<pss,int> T;
+	#undef pss
+
+
 	//the source file
 	FILE * source_file;
 

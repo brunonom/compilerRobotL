@@ -5,7 +5,7 @@ using namespace std;
 #include "global.cpp"
 #include "token_automata.cpp"
 #include "lexico.cpp"
-
+#include "sintatico.cpp"
 
 int main(int argc, char* argv[]){
 
@@ -40,6 +40,12 @@ int main(int argc, char* argv[]){
 	}
 	else{
 		ok = main_lex(verbose);
+		if(ok){
+			ok = main_sin();
+		}
+		else{
+			printf("Compilacao finalizada com erros\n");
+		}
 	}
 
 	if(ok){
@@ -50,7 +56,7 @@ int main(int argc, char* argv[]){
 	}
 
 	if(glob::source_file != NULL){
-		fclose(glob::source_file);
+		// movi o close file pra quando terminamos de analisar o input no lexico.
 	}
 
 	return 0;
