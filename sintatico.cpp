@@ -1,5 +1,3 @@
-
-
 bool build_grammar(){
 	ifstream input("sintatico.in");
 	/*
@@ -74,14 +72,14 @@ bool LL1_parser(){
 			continue;
 		}
 		now = pss(s.top(),tb[i].name);
-		if(! glob::T.count(now)){
+		if(!glob::T.count(now)){
 			return false;
 		}
 		s.pop();
 		r = glob::T[now];
 		r--;
 		vector<string> &v = glob::G.productions[r].body;
-		for(int j=(int)v.size() - 1;j>=0;j--){
+		for(int j=(int)v.size()-1; j>=0; j--){
 			s.push(v[j]);
 		}
 	}

@@ -43,13 +43,14 @@ namespace glob{
 			productions.push_back(production(nonterminal,body));
 		}
 	};
+	
 	// grammar to be built in syntactic analysis.
 	grammar G;
+	
 	// map used for table transitions in syntactic analysis.
 	#define pss pair<string,string>
 	map<pss,int> T;
 	#undef pss
-
 
 	//the source file
 	FILE * source_file;
