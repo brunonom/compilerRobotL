@@ -1,4 +1,5 @@
 #esse eh o input do programa exemplo (exemplo 1 - exemplo de programa usando a robot-l)
+#obs: gramática não aceita repita sem fimrepita
 
 PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
@@ -12,7 +13,7 @@ PROGRAMAINICIO
 		Aguarde Ate Robo Pronto	
 	FIM
 	EXECUCAOINICIO
-		Repita 3 VEZES Trilha
+		Repita 3 VEZES Trilha fimrepita
 		Vire Para DIREITA
 	FIMEXECUCAO
 FIMPROGRAMA

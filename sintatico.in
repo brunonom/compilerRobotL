@@ -1,5 +1,5 @@
 40
-programa 6 programainicio x1 execucaoinicio comando fimexecucao fimprograma
+programa 7 programainicio x1 execucaoinicio comando x2 fimexecucao fimprograma
 declaracao 4 definainstrucao id como comando
 comando 1 bloco
 comando 1 iteracao

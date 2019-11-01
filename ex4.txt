@@ -1,16 +1,12 @@
+#esse eh o input do programa exemplo (exemplo 1 - exemplo de programa usando a robot-l)
+
 PROGRAMAINICIO
+	DEFINAINSTRUCAO Trilha COMO
+	INICIO
+		Mova 3 Passos
+	FIM
 	EXECUCAOINICIO
-		se lampada acesa a frente entao
-			Repita 3 VEZES
-				Mova 1 passos
-			fimrepita
-		fimse
-		senao
-			aguarde ate robo pronto
-			pare
-			finalize
-			apague lampada
-			acenda lampada
-		fimsenao
+		Repita 3 VEZES Trilha
+		Vire Para DIREITA
 	FIMEXECUCAO
 FIMPROGRAMA

@@ -42,13 +42,10 @@ int main(int argc, char* argv[]){
 		ok = main_lex(verbose);
 
 		if(ok){
-			/* COMENTADO ENQUANTO MEXO NO INPUT
-			ok = main_sin();
-			*/
-			ok = main_sin2(verbose);
+			ok = main_sin(verbose);
 		}
 		else{
-			printf("Compilacao finalizada com erros\n");
+			printf("Compilacao finalizada com erros lexicos\n");
 		}
 	}
 
@@ -56,7 +53,7 @@ int main(int argc, char* argv[]){
 		printf("Compilacao finalizada sem erros\n");
 	}
 	else{
-		printf("Compilacao finalizada com erros\n");
+		printf("Compilacao finalizada com erros sintaticos\n");
 	}
 
 	if(glob::source_file != NULL){

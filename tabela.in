@@ -1,4 +1,4 @@
-77
+78
 bloco inicio 8
 comando acendalampada 7
 comando aguardeate 7
@@ -15,9 +15,9 @@ comando virepara 7
 condicao direitarobobloqueada 26
 condicao esquerdarobobloqueada 25
 condicao frenterobobloqueada 24
-condicao lampadaacesaafrente 27
-condicao lampadaacesaaesquerda 29
 condicao lampadaacesaadireita 31
+condicao lampadaacesaaesquerda 29
+condicao lampadaacesaafrente 27
 condicao lampadaapagadaadireita 32
 condicao lampadaapagadaaesquerda 30
 condicao lampadaapagadaafrente 28
@@ -47,6 +47,7 @@ x2 aguardeate 35
 x2 apaguelampada 35
 x2 enquanto 35
 x2 fim 36
+x2 fimexecucao 36
 x2 finalize 35
 x2 id 35
 x2 inicio 35

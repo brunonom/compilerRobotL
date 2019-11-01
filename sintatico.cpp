@@ -104,6 +104,7 @@ bool LL1_parser(){
 		}
 		now = pss(s.top(),tb[i].name);
 		if(!glob::T.count(now)){
+			cout << now.first << " " << now.second << "\n";
 			return false;
 		}
 		s.pop();
@@ -118,7 +119,11 @@ bool LL1_parser(){
 	return true;
 }
 
-bool main_sin(){
+bool main_sin(bool verbose){
+
+	lex_to_syn_tokens();
+	
+	if (verbose) print_symbol_table_syntax();
 
 	bool ok = build_grammar();
 	if(!ok) return ok;
@@ -128,17 +133,5 @@ bool main_sin(){
 
 	ok = LL1_parser();
 	return ok;
-}
-
-bool main_sin2(bool verbose){
-
-	bool ok = true;
-
-	lex_to_syn_tokens();
-
-	if (verbose) print_symbol_table_syntax();
-
-	return ok;
-
 }
 
