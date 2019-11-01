@@ -1,2 +1,41 @@
-0
-TODO
+40
+programa 6 programainicio x1 execucaoinicio comando fimexecucao fimprograma
+declaracao 4 definainstrucao id como comando
+comando 1 bloco
+comando 1 iteracao
+comando 1 laco
+comando 1 condicional
+comando 1 instrucao
+bloco 3 inicio x2 fim
+iteracao 5 repita numero vezes comando fimrepita
+laco 5 enquanto condicao faca comando fimpara
+condicional 6 se condicao entao comando fimse x3
+instrucao 3 mova numero passos
+instrucao 2 virepara sentido
+instrucao 1 id
+instrucao 1 pare
+instrucao 1 finalize
+instrucao 1 apaguelampada
+instrucao 1 acendalampada
+instrucao 2 aguardeate condicao
+condicao 1 robopronto
+condicao 1 roboparado
+condicao 1 roboocupado
+condicao 1 robomovimentando
+condicao 1 frenterobobloqueada
+condicao 1 esquerdarobobloqueada
+condicao 1 direitarobobloqueada 
+condicao 1 lampadaacesaafrente
+condicao 1 lampadaapagadaafrente
+condicao 1 lampadaacesaaesquerda
+condicao 1 lampadaapagadaaesquerda
+condicao 1 lampadaacesaadireita
+condicao 1 lampadaapagadaadireita
+x1 2 declaracao x1
+x1 0
+x2 2 comando x2
+x2 0
+x3 3 senao comando fimsenao
+x3 0
+sentido 1 esquerda
+sentido 1 direita

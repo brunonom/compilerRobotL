@@ -39,7 +39,7 @@ bool build_grammar(){
 		.
 		Pn
 
-		e P_i == Nonterminal k R1 R2 R3 ... Rk
+		ex. P_i == Nonterminal k R1 R2 R3 ... Rk
 	*/
 	if(!input){return false;}
 	int n,k;
@@ -87,12 +87,12 @@ bool LL1_parser(){
 	stack<string> s;
 	s.push("$");
 	s.push("programa");
-	// tokens are in symbol_table
+	// tokens are in symbol_table_syntax
 	int i = 0;
 	int r;
 	#define pss pair<string,string>
 	pss now;
-	vector<glob::token> &tb = glob::symbol_table;
+	vector<glob::token> &tb = glob::symbol_table_syntax;
 	while(s.top() != "$"){
 		if(i >= tb.size()){
 			return false;
