@@ -1,5 +1,6 @@
 *.exe
 *.out
+*.ods#
 
 input2.txt
 err.txt
