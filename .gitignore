@@ -1,5 +1,7 @@
 *.exe
+*.out
 
 input2.txt
 err.txt
 todo.txt
+o.txt

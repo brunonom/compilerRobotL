@@ -1,0 +1,16 @@
+PROGRAMAINICIO
+	EXECUCAOINICIO
+		se lampada acesa a frente entao
+			Repita 3 VEZES
+				Mova 1 passos
+			fimrepita
+		fimse
+		senao
+			aguarde ate robo pronto
+			pare
+			finalize
+			apague lampada
+			acenda lampada
+		fimsenao
+	FIMEXECUCAO
+FIMPROGRAMA

@@ -40,8 +40,12 @@ int main(int argc, char* argv[]){
 	}
 	else{
 		ok = main_lex(verbose);
+
 		if(ok){
+			/* COMENTADO ENQUANTO MEXO NO INPUT
 			ok = main_sin();
+			*/
+			ok = main_sin2(verbose);
 		}
 		else{
 			printf("Compilacao finalizada com erros\n");

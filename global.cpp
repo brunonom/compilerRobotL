@@ -58,8 +58,9 @@ namespace glob{
 	//every char and its position in the source code
 	vector<char_pos> char_table;
 	
-	//symbol table
+	//symbol tables
 	vector<token> symbol_table;
+	vector<token> symbol_table_syntax;
 
 	//reserved words
 	vector<string> reserved_words = {

@@ -1,3 +1,32 @@
+void lex_to_syn_tokens(){
+
+	regex r("\\s+");
+
+	for (glob::token t : glob:: symbol_table) {
+		string n = regex_replace(t.name, r, "");
+
+		glob::token newtoken(n, t.value);
+		newtoken.line_number = t.line_number;
+		newtoken.column_number = t.column_number;
+
+		glob::symbol_table_syntax.push_back(newtoken);
+
+	}
+
+}
+
+void print_symbol_table_syntax(){
+	printf("\ntabela de tokens pós-adaptação\n");
+	printf("----------------------------------------\n");
+	cout << "[token] : [valor]\n";
+	for(glob::token t : glob::symbol_table_syntax){
+		string n = t.name;
+		string v = t.value;
+		cout << n << " : " << v << "\n";
+	}
+	printf("----------------------------------------\n");
+}
+
 bool build_grammar(){
 	ifstream input("sintatico.in");
 	/*
@@ -29,6 +58,7 @@ bool build_grammar(){
 	input.close();
 	return true;
 }
+
 bool build_table(){
 	ifstream input("tabela.in");
 	/*
@@ -52,6 +82,7 @@ bool build_table(){
 	#undef pss
 	return true;
 }
+
 bool LL1_parser(){
 	stack<string> s;
 	s.push("$");
@@ -86,6 +117,7 @@ bool LL1_parser(){
 	#undef pss
 	return true;
 }
+
 bool main_sin(){
 
 	bool ok = build_grammar();
@@ -96,5 +128,17 @@ bool main_sin(){
 
 	ok = LL1_parser();
 	return ok;
+}
+
+bool main_sin2(bool verbose){
+
+	bool ok = true;
+
+	lex_to_syn_tokens();
+
+	if (verbose) print_symbol_table_syntax();
+
+	return ok;
+
 }
 
