@@ -6,6 +6,7 @@ using namespace std;
 #include "token_automata.cpp"
 #include "lexico.cpp"
 #include "sintatico.cpp"
+#include "semantico.cpp"
 
 int main(int argc, char* argv[]){
 
@@ -37,23 +38,36 @@ int main(int argc, char* argv[]){
 
 	if(glob::source_file == NULL){
 		printf("Arquivo de entrada invalido\n");
+		return 0;
 	}
 	else{
 		ok = main_lex(verbose);
-
-		if(ok){
-			ok = main_sin(verbose);
-		}
-		else{
-			printf("Compilacao finalizada com erros lexicos\n");
-		}
 	}
+
+	if(ok){
+		ok = main_sin(verbose);
+	}
+	else{
+		printf("Compilacao finalizada com erros lexicos\n");
+		return 0;
+	}
+
+
+	if(ok){
+		ok = main_sem(verbose);
+	}
+	else{
+		printf("Compilacao finalizada com erros sintaticos\n");
+		return 0;
+	}
+
 
 	if(ok){
 		printf("Compilacao finalizada sem erros\n");
 	}
 	else{
-		printf("Compilacao finalizada com erros sintaticos\n");
+		printf("Compilacao finalizada com erros semânticos.\n");
+		return 0;
 	}
 
 	if(glob::source_file != NULL){

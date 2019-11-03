@@ -1,0 +1,22 @@
+PROGRAMAINICIO
+	DEFINAINSTRUCAO Trilha COMO
+	INICIO
+		Mova 3 Passos #cmnt
+		Aguarde Ate Robo Pronto #comentarios 
+		Vire Para ESQUERDA #cmnt
+		Apague Lampada
+		Vire Para DIREITA
+		Mova 1 Passos
+		Aguarde Ate Robo Pronto	
+	FIM
+	DEFINAINSTRUCAO Trilha COMO # redeclaracao de id
+	INICIO
+		Mova 3 Passos # sem Aguarde Ate Robo Pronto 
+		Vire Para ESQUERDA # Virando para Direita imediatamente apos virar para esquerda
+		Vire Para DIREITA
+	FIM
+	EXECUCAOINICIO
+		Repita 3 VEZES Trilha fimrepita
+		Vire Para DIREITA
+	FIMEXECUCAO
+FIMPROGRAMA

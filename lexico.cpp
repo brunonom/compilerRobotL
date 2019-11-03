@@ -147,6 +147,7 @@ bool is_a_reserved_word(string x){
 	return false;
 }
 
+bool define_instruction = false; // created for counting declaration of id's
 //makes a token
 bool make_token(string x){
 	// for(string a : glob::reserved_words){
@@ -161,6 +162,10 @@ bool make_token(string x){
 	}
 	else if(autm_identificador(x) && !is_a_reserved_word(x)){
 		glob::symbol_table.push_back({"id", x});
+		if(define_instruction){
+			define_instruction = false;
+			glob::id_frequency[x]++;
+		}
 		return true;
 	}
 	else if(autm_condicao(x)){
@@ -189,6 +194,7 @@ bool make_token(string x){
 	}
 	else if(autm_declaracao(x)){
 		glob::symbol_table.push_back({x, x});
+		if(x=="definainstrucao") define_instruction = true;
 		return true;
 	}
 	else if(autm_programa(x)){

@@ -26,7 +26,6 @@ namespace glob{
 		string value;
 		int line_number;
 		int column_number;
-
 		token(string n, string v){
 			name = n; value = v;
 		}
@@ -51,6 +50,9 @@ namespace glob{
 	#define pss pair<string,string>
 	map<pss,int> T;
 	#undef pss
+
+	//counts frequency of each id
+	map<string,int> id_frequency;
 
 	//the source file
 	FILE * source_file;
