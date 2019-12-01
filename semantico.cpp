@@ -23,11 +23,11 @@ bool check_SemanticRule2and3(){
 		if(x=="vire para"){
 			string y = tab[i+1].value;
 			if(y=="esquerda" && last_turn == right){
-				cout << "Vire Para direita seguido de Vire Para esquerda." << endl;
+				cout << "erro: linha " << tab[i].line_number << " coluna " << tab[i].column_number <<  " vire para direita seguido de vire para esquerda." << endl;
 				return false;
 			}
 			else if(y=="direita" && last_turn == left){
-				cout << "Vire Para esquerda seguido de Vire Para direita." << endl;
+				cout << "erro: linha " << tab[i].line_number << " coluna " << tab[i].column_number <<  " vire para esquerda seguido de vire para direita." << endl;
 				return false;
 			}
 			last_turn = (y=="direita" ? right : left);
@@ -36,7 +36,7 @@ bool check_SemanticRule2and3(){
 			// estrutura obrigatoria : "mova numero passos aguardeate robopronto"
 			// enumerando temos :         i    i+1   i+2      i+3        i+4 
 			if(i+3 >= n or tab[i+3].value != "aguarde ate" or tab[i+4].value != "robo pronto" ){
-				cout << "Falta Aguarde Ate Robo Pronto após mova n passos." << endl;
+				cout << "erro: linha " << tab[i].line_number << " coluna " << tab[i].column_number <<  " falta aguarde ate robo pronto após mova n passos." << endl;
 				return false;
 			}
 			return true;

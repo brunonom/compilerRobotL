@@ -3,59 +3,60 @@ void print_char_table(bool line_and_col){
 	printf("\ntabela de caracteres\n");
 	printf("----------------------------------------\n");
 
-	for(int i=0; i<glob::char_table.size(); i++){
-		char c = glob::char_table[i].character;
-		int ln = glob::char_table[i].line_number;
-		int cn = glob::char_table[i].column_number;
-		if(line_and_col){
-			printf("%c(%d)(%d)\n", c, ln, cn);
-		}
-		else{
-			printf("%c\n", c);
-		}
-	}
-
-	// int lin=glob::char_table[0].line_number;
-	// int col=1;
-	// printf("(linha %d)\t:", lin);
 	// for(int i=0; i<glob::char_table.size(); i++){
-	// 	// printf("%d colunas\n", char_table[i].size());
 	// 	char c = glob::char_table[i].character;
 	// 	int ln = glob::char_table[i].line_number;
 	// 	int cn = glob::char_table[i].column_number;
-	// 	while(lin < ln){
-	// 		printf("\n(linha %d)\t:", ln);
-	// 		lin++;
-	// 		col=1;
-	// 	}
-	// 	while(col < cn){
-	// 		printf(" ");
-	// 		col++;
-	// 	}
-	// 	if(!line_and_col){
-	// 		printf("%c(%d)(%d)", c, ln, cn);
+	// 	if(line_and_col){
+	// 		printf("%c(%d)(%d)\n", c, ln, cn);
 	// 	}
 	// 	else{
-	// 		printf("%c", c);
+	// 		printf("%c\n", c);
 	// 	}
-	// 	col++;
 	// }
+
+	int lin=glob::char_table[0].line_number;
+	int col=1;
+	printf("(linha %d)\t:", lin);
+	for(int i=0; i<glob::char_table.size(); i++){
+		// printf("%d colunas\n", char_table[i].size());
+		char c = glob::char_table[i].character;
+		int ln = glob::char_table[i].line_number;
+		int cn = glob::char_table[i].column_number;
+		while(lin < ln){
+			printf("\n(linha %d)\t:", ln);
+			lin++;
+			col=1;
+		}
+		while(col < cn){
+			printf(" ");
+			col++;
+		}
+		if(!line_and_col){
+			printf("%c(%d)(%d)", c, ln, cn);
+		}
+		else{
+			printf("%c", c);
+		}
+		col++;
+	}
 
 	printf("\n----------------------------------------\n");
 }
 
 //autoexplanatory
-void print_symbol_table(){
-	printf("\ntabela de tokens\n");
-	printf("----------------------------------------\n");
-	cout << "[token] : [valor]\n";
-	for(glob::token t : glob::symbol_table){
-		string n = t.name;
-		string v = t.value;
-		cout << n << " : " << v << "\n";
-	}
-	printf("----------------------------------------\n");
-}
+// void print_symbol_table(){
+// 	printf("\ntabela de tokens\n");
+// 	printf("----------------------------------------\n");
+// 	cout << "[token] : [valor]\n";
+// 	for(glob::token t : glob::symbol_table){
+// 		string n = t.name;
+// 		string v = t.value;
+// 		cout << n << " : " << v;
+// 		cout << "(" << t.line_number << ", " << t.column_number << ")\n";
+// 	}
+// 	printf("----------------------------------------\n");
+// }
 
 //get data from the source code
 bool get_data(){
@@ -149,7 +150,7 @@ bool is_a_reserved_word(string x){
 
 bool define_instruction = false; // created for counting declaration of id's
 //makes a token
-bool make_token(string x){
+bool make_token(string x, glob::char_pos charp){
 	// for(string a : glob::reserved_words){
 	// 	if(x == a){
 	// 		glob::symbol_table.push_back({x, x});
@@ -157,11 +158,11 @@ bool make_token(string x){
 	// 	}
 	// }
 	if(autm_numero(x)){
-		glob::symbol_table.push_back({"numero", x});
+		glob::symbol_table.push_back({"numero", x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_identificador(x) && !is_a_reserved_word(x)){
-		glob::symbol_table.push_back({"id", x});
+		glob::symbol_table.push_back({"id", x, charp.line_number, charp.column_number});
 		if(define_instruction){
 			define_instruction = false;
 			glob::id_frequency[x]++;
@@ -169,40 +170,40 @@ bool make_token(string x){
 		return true;
 	}
 	else if(autm_condicao(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_instrucao(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_condicional(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_laco(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_iteracao(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_bloco(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_declaracao(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		if(x=="definainstrucao") define_instruction = true;
 		return true;
 	}
 	else if(autm_programa(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	else if(autm_sentido(x)){
-		glob::symbol_table.push_back({x, x});
+		glob::symbol_table.push_back({x, x, charp.line_number, charp.column_number});
 		return true;
 	}
 	return false;
@@ -296,7 +297,7 @@ bool tokenize(){
 			continue;
 		}
 		//cout << novo_token << endl;
-		got_token = make_token(novo_token);
+		got_token = make_token(novo_token, ini);
 		// cout << novo_token << endl;
 		if(!got_token){
 			ok = false;
@@ -318,7 +319,7 @@ bool main_lex(bool verbose){
 	if(!ok) return false;
 	
 	ok = tokenize();
-	if(verbose) print_symbol_table();
+	// if(verbose) print_symbol_table();
 	
 	return ok;
 }

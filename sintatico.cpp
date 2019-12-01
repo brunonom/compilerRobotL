@@ -5,24 +5,22 @@ void lex_to_syn_tokens(){
 	for (glob::token t : glob:: symbol_table) {
 		string n = regex_replace(t.name, r, "");
 
-		glob::token newtoken(n, t.value);
-		newtoken.line_number = t.line_number;
-		newtoken.column_number = t.column_number;
+		glob::token newtoken(n, t.value, t.line_number, t.column_number);
 
 		glob::symbol_table_syntax.push_back(newtoken);
 
 	}
-
 }
 
 void print_symbol_table_syntax(){
-	printf("\ntabela de tokens pós-adaptação\n");
+	printf("\ntabela de tokens\n");
 	printf("----------------------------------------\n");
-	cout << "[token] : [valor]\n";
+	cout << "[token] : [valor] :: (linha, coluna)\n";
 	for(glob::token t : glob::symbol_table_syntax){
 		string n = t.name;
 		string v = t.value;
-		cout << n << " : " << v << "\n";
+		cout << n << " : " << v << " :: ";
+		cout << "(" << t.line_number << ", " << t.column_number << ")\n";
 	}
 	printf("----------------------------------------\n");
 }
@@ -99,6 +97,7 @@ bool LL1_parser(){
 	node *atual = root;
 	while(s.top() != "$"){
 		if(i >= tb.size()){
+			cout << "erro: fim de arquivo nao esperado\n";
 			return false;
 		}
 		//cout << atual->value << endl;
@@ -118,10 +117,10 @@ bool LL1_parser(){
 			i++;
 			continue;
 		}
-		now = pss(s.top(),tb[i].name);
+		now = pss(s.top(), tb[i].name);
 		if(!glob::T.count(now)){
-			cout << "ERRO: " << endl;
-			cout << now.first << " " << now.second << "\n";
+			cout << "erro: linha " << tb[i].line_number << " coluna " << tb[i].column_number << ": ";
+			cout << "token esperado <" << s.top() << ">, token recebido <" << tb[i].value << ">\n";
 			return false;
 		}
 		//cout << now.first << " " << now.second << endl;

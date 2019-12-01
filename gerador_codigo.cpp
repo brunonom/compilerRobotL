@@ -12,7 +12,7 @@ int se_id = 0;
 bool zzz = false;
 string instr;
 void dfs(glob::node *atual, int depth){
-	cout << atual->nome << " " << atual->value << " " << depth << endl;
+	// cout << atual->nome << " " << atual->value << " " << depth << endl;
 	if(atual->nome == "fimse"){
 		produto << "jmp endif_" << se_id << endl;
 		zzz = true;
@@ -56,7 +56,7 @@ void dfs(glob::node *atual, int depth){
 	}
 	else if(atual->nome == "fimrepita"){
 		if(loop_id.empty()){
-			cout << "ERRO NA GERACAO, SEM FECHAMENTO DE LOOP" << endl;
+			cout << "erro: sem fechamento de loop" << endl;
 			exit(0);
 		}
 		else{
@@ -95,7 +95,7 @@ void dfs(glob::node *atual, int depth){
 	}
 	else if(atual->nome == "fimpara"){
 		if(conditions.empty() or while_id.empty()){
-			cout << "ERRO NA GERACAO, SEM CONDICAO" << endl;
+			cout << "erro: sem condicao" << endl;
 			exit(0);
 		}
 		else{
@@ -162,5 +162,5 @@ bool gera_codigo(){
 bool main_gerador(bool verbose){
 	bool a = gera_codigo();
 	produto.close();
-	return true;
+	return a;
 }

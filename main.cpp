@@ -43,12 +43,10 @@ int main(int argc, char* argv[]){
 	}
 	else{
 		ok = main_lex(verbose);
-		cout << "finished lex" << endl;
 	}
 
 	if(ok){
 		ok = main_sin(verbose);
-		cout << "finished sin" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros lexicos\n");
@@ -58,7 +56,6 @@ int main(int argc, char* argv[]){
 
 	if(ok){
 		ok = main_sem(verbose);
-		cout << "finished semantic" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros sintaticos\n");
@@ -68,7 +65,6 @@ int main(int argc, char* argv[]){
 
 	if(ok){
 		ok = main_gerador(verbose);
-		cout << "finished generator" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros semânticos.\n");

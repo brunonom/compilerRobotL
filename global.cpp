@@ -26,8 +26,11 @@ namespace glob{
 		string value;
 		int line_number;
 		int column_number;
-		token(string n, string v){
-			name = n; value = v;
+		token(string n, string v, int l, int c){
+			name = n;
+			value = v;
+			line_number = l;
+			column_number = c;
 		}
 	};
 
