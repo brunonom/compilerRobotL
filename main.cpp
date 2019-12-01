@@ -7,7 +7,7 @@ using namespace std;
 #include "lexico.cpp"
 #include "sintatico.cpp"
 #include "semantico.cpp"
-
+#include "gerador_codigo.cpp"
 int main(int argc, char* argv[]){
 
 	bool ok = false;
@@ -22,6 +22,7 @@ int main(int argc, char* argv[]){
 	for(int i=0; i<argc; i++){
 		if(strcmp(argv[i], "-s") == 0){
 			glob::source_file = fopen(argv[i+1], "r");
+			glob::source_file_name = argv[i+1];
 		}
 		if(strcmp(argv[i], "-v") == 0){
 			verbose = true;
@@ -42,10 +43,12 @@ int main(int argc, char* argv[]){
 	}
 	else{
 		ok = main_lex(verbose);
+		cout << "finished lex" << endl;
 	}
 
 	if(ok){
 		ok = main_sin(verbose);
+		cout << "finished sin" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros lexicos\n");
@@ -55,6 +58,7 @@ int main(int argc, char* argv[]){
 
 	if(ok){
 		ok = main_sem(verbose);
+		cout << "finished semantic" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros sintaticos\n");
@@ -63,15 +67,20 @@ int main(int argc, char* argv[]){
 
 
 	if(ok){
-		printf("Compilacao finalizada sem erros\n");
+		ok = main_gerador(verbose);
+		cout << "finished generator" << endl;
 	}
 	else{
 		printf("Compilacao finalizada com erros semânticos.\n");
 		return 0;
 	}
 
-	if(glob::source_file != NULL){
-		// movi o close file pra quando terminamos de analisar o input no lexico.
+	if(ok){
+		printf("Compilacao finalizada sem erros\n");
+	}
+	else{
+		// a gnt q lute
+		printf("Compilacao finalizada com erros na geração de código.");
 	}
 
 	return 0;

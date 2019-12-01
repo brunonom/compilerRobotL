@@ -1,9 +1,9 @@
 PROGRAMAINICIO
 	DEFINAINSTRUCAO Trilha COMO
 	INICIO
-		Mova 3 Passos #cmnt
+		Mova 3 Passos #comentario
 		Aguarde Ate Robo Pronto #comentarios 
-		Vire Para ESQUERDA #cmnt
+		Vire Para ESQUERDA 
 		Apague Lampada
 		Vire Para DIREITA
 		Mova 1 Passos

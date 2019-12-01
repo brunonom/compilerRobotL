@@ -56,6 +56,8 @@ namespace glob{
 
 	//the source file
 	FILE * source_file;
+	string source_file_name;
+
 
 	//every char and its position in the source code
 	vector<char_pos> char_table;
@@ -110,4 +112,20 @@ namespace glob{
 		"a"
 		"$"
 	};
+	
+	struct node{
+		vector< node* > adj;
+		node *parent = nullptr;
+		string value;
+		string nome;
+		int son = 0;
+		node(string x,string y){
+			nome = x;
+			value = y;
+
+		}
+	};
+
+	node *root;
 }
+

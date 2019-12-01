@@ -84,35 +84,73 @@ bool build_table(){
 }
 
 bool LL1_parser(){
+	using namespace glob;
 	stack<string> s;
 	s.push("$");
 	s.push("programa");
+	root = new node("programa","$");
+
 	// tokens are in symbol_table_syntax
 	int i = 0;
 	int r;
 	#define pss pair<string,string>
 	pss now;
 	vector<glob::token> &tb = glob::symbol_table_syntax;
+	node *atual = root;
 	while(s.top() != "$"){
 		if(i >= tb.size()){
 			return false;
 		}
+		//cout << atual->value << endl;
 		if(s.top() == tb[i].name){
+			//cout << "MATCH: " << s.top() << " " << tb[i].name << endl;
+			atual->value = tb[i].value;
+			atual = atual->parent;
+			atual->son++;
+			while(atual->adj.size() <= atual->son && atual!=root){
+				atual = atual->parent;
+				atual->son++;
+			}
+			if(atual->adj.size() > atual->son){
+				atual = atual->adj[atual->son];
+			}
 			s.pop();
 			i++;
 			continue;
 		}
 		now = pss(s.top(),tb[i].name);
 		if(!glob::T.count(now)){
+			cout << "ERRO: " << endl;
 			cout << now.first << " " << now.second << "\n";
 			return false;
 		}
+		//cout << now.first << " " << now.second << endl;
 		s.pop();
+		
 		r = glob::T[now];
+		//cout << "REGRA: " << r << endl;
 		r--;
+		
 		vector<string> &v = glob::G.productions[r].body;
 		for(int j=(int)v.size()-1; j>=0; j--){
 			s.push(v[j]);
+			atual->adj.push_back(new node(v[j],"$"));
+			atual->adj.back()->parent = atual;
+		}
+		reverse(atual->adj.begin(), atual->adj.end());
+		if(atual->adj.size() > 0){
+			atual = atual->adj[0];
+		}
+		else{
+			atual = atual->parent;
+			atual->son++;
+			while(atual->adj.size() <= atual->son && atual!=root){
+				atual = atual->parent;
+				atual->son++;
+			}
+			if(atual->adj.size() > atual->son){
+				atual = atual->adj[atual->son];
+			}
 		}
 	}
 	#undef pss

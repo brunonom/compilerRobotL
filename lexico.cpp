@@ -63,15 +63,14 @@ bool get_data(){
 	int lin=1;
 	int col=1;
 	char buffer;
-
-	while(buffer = getc(glob::source_file)){
-		
+	while(!feof(glob::source_file)){
+		buffer = getc(glob::source_file);
 		//ignore comments
-		//cout << buffer << endl;
 		if(buffer == '#'){
 			col=0;
 			lin++;
-			while(buffer != '\n' && !feof(glob::source_file)){
+			//cout << "hashtag " << lin << endl;
+			while(!feof(glob::source_file) && buffer != '\n'){
 				buffer = getc(glob::source_file);
 			}
 		}
@@ -97,7 +96,8 @@ bool get_data(){
 
 			ungetc(buffer, glob::source_file);
 			
-			while(buffer = getc(glob::source_file)){
+			while(!feof(glob::source_file)){
+				buffer = getc(glob::source_file);
 				if(buffer == ' '){
 					col++;
 				}
@@ -243,6 +243,7 @@ bool tokenize(){
 	for(int i=0; i<glob::char_table.size(); ){
 		string novo_token = nextword(i);
 		glob::char_pos ini = get_char_table_pos(i);
+		while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 		i += 1 + novo_token.size();		
 		string k;
 		if(
@@ -253,6 +254,7 @@ bool tokenize(){
 			novo_token == "robo"
 		  ){
 		  	k = nextword(i);
+		  	while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 			novo_token += ' ' + k;
 			i += 1 + k.size();
 		}
@@ -263,23 +265,28 @@ bool tokenize(){
 			){
 			if(convert_to_lowercase(nextword(i)) == "robo"){
 				k = nextword(i);
+				while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 				novo_token += ' ' + k;
 				i += 1 + k.size();
 				k = nextword(i);
+				while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 				novo_token += ' ' + k;
 				i += 1 + k.size();
 			}
 		}
 		else if(novo_token == "lampada"){
 			k = nextword(i);
+			while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 			novo_token += ' ' + k;
 			i += 1 + k.size();
 
 			k = nextword(i);
+			while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 			novo_token += ' ' + k;
 			i += 1 + k.size();
 			
 			k = nextword(i);
+			while(i+1 < glob::char_table.size() && glob::char_table[i].character == ' ') i++;
 			novo_token += ' ' + k;
 			i += 1 + k.size();
 		}		
@@ -307,7 +314,7 @@ bool main_lex(bool verbose){
 
 	ok = get_data();
 	if(verbose) print_char_table(true);
-	
+
 	if(!ok) return false;
 	
 	ok = tokenize();

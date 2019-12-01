@@ -1,0 +1,44 @@
+
+PROGRAMAINICIO
+	DEFINAINSTRUCAO Trilha COMO
+	INICIO
+		Mova 3 Passos
+		Aguarde Ate Robo Pronto
+		Aguarde Ate Lampada Apagada A Frente
+		Vire Para ESQUERDA
+		Apague Lampada
+		Vire Para DIREITA
+		Mova 1 Passos
+		Aguarde Ate Robo Pronto
+	FIM
+	DEFINAINSTRUCAO Trilha2 COMO
+	INICIO
+		Mova 3 Passos
+		Aguarde Ate Robo Pronto
+		Vire Para ESQUERDA
+		Pare
+		Vire Para DIREITA
+		Apague Lampada
+		Vire Para DIREITA
+		Mova 1 Passos
+		Aguarde Ate Robo Pronto
+	FIM
+	EXECUCAOINICIO
+	INICIO
+		enquanto Robo Parado faca Mova 1 Passos fimpara
+		Repita 3 VEZES Trilha FIMREPITA
+		Repita 4 VEZES 
+			INICIO
+			Mova 4 Passos
+			Aguarde Ate Robo Pronto
+			Vire Para DIREITA
+			Apague Lampada
+			Mova 2 Passos
+			pare
+			Aguarde Ate Robo pronto
+			FIM
+		FIMREPITA
+		se Robo Pronto entao Vire para esquerda fimse
+	FIM
+	FIMEXECUCAO
+FIMPROGRAMA
