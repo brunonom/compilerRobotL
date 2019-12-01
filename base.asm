@@ -27,30 +27,46 @@ name "robot"
 
 ; robot base i/o port:
 r_port equ 9
+mov al,0
+out 9,al
+out 10,al
+out 11,al
 ; MAIN:
 ;===================================
 
 
 
-ret
 
 
+call end_program
 ;===================================
 
 ; this procedure does not
 ; return until robot is ready
 ; to receive next command:
-wait_robot proc
+robopronto proc
 ; check if robot busy:
-busy: in al, r_port+2
+	  in al, r_port+2
       test al, 00000010b
       jnz busy ; busy, so wait.
+      mov bx,1
+      jmp nbusy
+busy:
+	  mov bx,0
+nbusy:
 ret    
-wait_robot endp
+robopronto endp
 
+espera_robopronto proc
+busay: in al, r_port+2
+      test al, 00000010b
+      jnz busay ; busy, so wait.	
+ret
+espera_robopronto endp
 ;===================================
 
 examine proc
+call espera_robopronto
 mov al, 4
 out r_port, al
 call wait_exam
@@ -70,27 +86,41 @@ wait_exam endp
 ;===================================
 
 ; switch off the lamp:
-switch_off_lamp proc
+apaguelampada proc
+call espera_robopronto
 mov al, 6
 out r_port, al
+
 ret
-switch_off_lamp endp
+apaguelampada endp
 
 ;===================================
 
 ; switch on the lamp:
-switch_on_lamp proc
+acendalampada proc
+call espera_robopronto
 mov al, 5
 out r_port, al
+
 ret
-switch_on_lamp endp
+acendalampada endp
 
 ;===================================
 
 ;siga em frente
 move_forward proc
+call espera_robopronto
+call examine
+; get result from
+; data register:
+in al, r_port + 1
+; nothing found?
+cmp al, 0
+jne fim_move  ; - yes, so continue.
 mov al, 1
 out r_port, al
+call espera_robopronto
+fim_move: nop
 ret
 move_forward endp
 
@@ -98,19 +128,28 @@ move_forward endp
 
 ;olhe para o lado
 turn_right proc
+call espera_robopronto
 mov al, 3
 out r_port, al
+call espera_robopronto
 ret
 turn_right endp
 
 turn_left proc
+call espera_robopronto
 mov al, 2
 out r_port, al
+call espera_robopronto
 ret
 turn_left endp
+;===================================
+; INSTRUCOES:
+
 
 ;===================================
-
-
+end_program proc
+termino:
+jmp termino
+end_program endp
 
 ;===================================

@@ -1,0 +1,20 @@
+
+PROGRAMAINICIO
+	EXECUCAOINICIO
+		mova 5 passos
+		aguarde ate robo pronto
+		vire para esquerda
+		mova 8 passos
+		aguarde ate robo pronto
+		vire para esquerda
+		mova 5 passos
+		aguarde ate robo pronto
+		vire para esquerda
+		mova 6 passos
+		aguarde ate robo pronto
+		vire para esquerda
+		mova 2 passos
+		aguarde ate robo pronto
+		Apague Lampada
+	FIMEXECUCAO
+FIMPROGRAMA

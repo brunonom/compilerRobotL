@@ -143,9 +143,9 @@ bool gera_codigo(){
 	string linha;
 	int lat = 0;
 	while(getline(base,linha)){
-		produto << linha;
+		produto << linha << endl;
 		lat++;
-		if(lat == 33){
+		if(lat == 37){
 			break;
 		}
 	}
@@ -153,7 +153,7 @@ bool gera_codigo(){
 	dfs(glob::root,0);
 	// termina arquivo (constroi funcoes basicas e termina o loop principal)
 	while(getline(base,linha))
-		produto << linha;
+		produto << linha << endl;
 	base.close();
 	return true;
 	
