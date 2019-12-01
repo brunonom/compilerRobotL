@@ -144,11 +144,11 @@ ret
 turn_left endp
 ;===================================
 ; INSTRUCOES:
-finalize proc:
+finalize proc
 call end_program
 finalize endp
 
-pare proc:
+pare proc
 in al, 9
 cmp al, 1
 jne fim_pare
@@ -183,7 +183,7 @@ mov bx,0
 jmp fim_roboparado
 true_roboparado:
 mov bx,1
-fim_roboocupado:
+fim_roboparado:
 ret
 roboparado endp
 
